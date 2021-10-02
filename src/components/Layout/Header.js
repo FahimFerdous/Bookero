@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 const Header = () => {
     return (
@@ -41,4 +42,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default connect()(Header)
