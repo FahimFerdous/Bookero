@@ -12,13 +12,16 @@ const authreducer = (state = authState, action) => {
 
     switch (action.type) {
         case AuthActionType.LOGIN_SUCCESS:
-            return {
+
+            const newAuthState = {
                 isLoggedIn: true,
                 cred: action.payload
             }
+            return newAuthState;
+            localStorage.setItem("auth", newAuthState)
         case AuthActionType.LOGIN_FAILED:
             return state;
-            break;
+
 
         default:
             break;

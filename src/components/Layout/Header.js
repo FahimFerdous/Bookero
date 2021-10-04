@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Header = () => {
+const Header = (props) => {
+
+    let isLoggedIn = false;
+
     return (
         <div>
             <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
@@ -20,20 +23,40 @@ const Header = () => {
                                     Dashboard
                                 </a>
                             </li>
+
                         </ul>
 
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <a className="nav-link " href="register">
-                                    Sign Up
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="login">
-                                    Login
-                                </a>
-                            </li>
-                        </ul>
+                        {
+                            !isLoggedIn ? <>
+                                <ul className="navbar-nav ml-auto">
+                                    <li className="nav-item">
+                                        <a className="nav-link " href="register">
+                                            Sign Up
+                                        </a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="login">
+                                            Login
+                                        </a>
+                                    </li>
+                                </ul>
+                            </> : <>
+
+                                <ul className="navbar-nav ml-auto">
+                                    <li className="nav-item">
+                                        <a className="nav-link " href="register">
+                                            UserName
+                                        </a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="login">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </>
+                        }
                     </div>
                 </div>
             </nav>
@@ -42,4 +65,18 @@ const Header = () => {
     )
 }
 
-export default connect()(Header)
+const mapStatetoProps = (state) => {
+    return {
+        auth: state,
+    }
+}
+
+const mapDispatchtoProps = (dispatch) => {
+    return {
+        login: (userCred, history) => {
+
+        }
+    }
+}
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(Header)
