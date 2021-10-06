@@ -1,52 +1,65 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import { useHistory } from 'react-router-dom';
-import { LoginAuthAction } from '../../redux/actions/AuthAction';
+import { loginUser } from '../../redux/ApiCalls';
+
+import { Form, Formik } from 'formik'
+import TextField from "./TextField";
+
+import * as Yup from 'yup'
+
+const validate = Yup.object({
+
+    email: Yup.string().email("email is invalid").required("Email must be entered"),
+    password: Yup.string().min(6, "Minimum 6 character").required("Password must be entered"),
+
+})
 
 const Login = (props) => {
-    const { cred, login } = props;
+
+    const dispatch = useDispatch()
+
     let history = useHistory();
 
-    const [userCred, setuserCred] = useState({})
+
     return (
         <div className="login">
             <div className="container">
                 <div className="row">
                     <div className="col-md-8 m-auto">
                         <h1 className="display-4 text-center">Log In</h1>
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            console.log(userCred)
-                            login(userCred, history)
-                        }}>
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    className="form-control form-control-lg"
-                                    placeholder="Email Address"
-                                    name="email"
-                                    onChange={(e) => {
-                                        const email = e.target.value;
-                                        setuserCred({ ...userCred, ...{ email } })
-                                    }}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className="form-control form-control-lg"
-                                    placeholder="Password"
-                                    name="password"
-                                    onChange={(e) => {
-                                        const pass = e.target.value;
-                                        setuserCred({ ...userCred, ...{ pass } })
-                                    }}
-                                    required
-                                />
-                            </div>
-                            <input type="submit" className="btn btn-info btn-block mt-4" />
-                        </form>
+
+                        <Formik
+                            initialValues={{
+
+                                email: "",
+                                password: "",
+
+                            }}
+                            validationSchema={validate}
+                            onSubmit={(values, action) => {
+                                const userCred = {
+                                    email: values.email,
+                                    pass: values.password
+                                }
+                                console.log(userCred)
+                                loginUser(userCred, dispatch, history)
+                                action.resetForm()
+                            }}
+                        >
+                            {formik => (
+                                <Form>
+                                    <TextField name="email" type="email" placeholder="Username" />
+                                    <TextField name="password" type="password" placeholder="Password" />
+                                    <button className="btn btn-info btn-block mt-4">Submit</button>
+                                </Form>
+                            )}
+
+                        </Formik>
+
+
+
                     </div>
                 </div>
             </div>
@@ -55,18 +68,6 @@ const Login = (props) => {
     )
 }
 
-const mapStatetoProps = (state) => {
-    return {
-        cred: state,
-    }
-}
 
-const mapDispatchtoProps = (dispatch) => {
-    return {
-        login: (userCred, history) => {
-            dispatch(LoginAuthAction(userCred, history))
-        }
-    }
-}
 
-export default connect(mapStatetoProps, mapDispatchtoProps)(Login)
+export default Login

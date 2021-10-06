@@ -3,12 +3,26 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { useHistory } from "react-router-dom";
+import { Form, Formik } from 'formik'
+import TextField from "./TextField";
+
+import { Alert, Button } from "react-bootstrap"
+
+import * as Yup from 'yup'
+
+const validate = Yup.object({
+    name: Yup.string().required("Name must be entered"),
+    email: Yup.string().email("email is invalid").required("Email must be entered"),
+    password: Yup.string().min(6, "Minimum 6 character").required("Password must be entered"),
+    confirmPassword: Yup.string().oneOf([Yup.ref("password"), null], "Password Must Match").required("Password must be entered"),
+})
 
 const Register = () => {
 
     let history = useHistory();
+    const [show, setShow] = useState(false);
 
-    const [userData, setuserData] = useState({});
+
 
     const createNewUser = async (username, fullName, password, confirmPassword) => {
         const data = {
@@ -20,14 +34,36 @@ const Register = () => {
         }
         await axios.post('http://localhost:8080/api/users/register', data)
             .then((res) => {
-                console.log(res)
-                history.push("/login")
+                setShow(true)
+
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
             })
     }
+
+    if (show) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <Alert variant="success">
+                            <Alert.Heading>Congrats! Your Acount has Created Successfully</Alert.Heading>
+                            <hr />
+                            <div className="d-flex justify-content-end">
+                                <Button onClick={() => { setShow(false); history.push("/login") }} variant="outline-success">
+                                    Go to Login!
+                                </Button>
+                            </div>
+                        </Alert>
+
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="register">
             <div className="container">
@@ -35,65 +71,47 @@ const Register = () => {
                     <div className="col-md-8 m-auto">
                         <h1 className="display-4 text-center">Sign Up</h1>
                         <p className="lead text-center">Create your Account</p>
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
 
-                            createNewUser(userData.email, userData.name, userData.password, userData.confirmPassword);
+                        <Formik
+                            initialValues={{
+                                name: "",
+                                email: "",
+                                password: "",
+                                confirmPassword: ""
+                            }}
+                            validationSchema={validate}
+                            onSubmit={(values, action) => {
+                                console.log(values)
+                                createNewUser(values.email, values.name, values.password, values.confirmPassword)
+                                action.resetForm()
+                            }}
+                        >
+                            {formik => (
+                                <>
+                                    <Form>
+                                        <TextField type="text"
 
-                        }}>
-                            <div className="form-group">
-                                <input
-                                    type="text"
-                                    className="form-control form-control-lg"
-                                    placeholder="Name"
-                                    name="name"
-                                    onChange={(e) => {
-                                        const name = e.target.value;
-                                        setuserData({ ...userData, ...{ name } })
-                                    }}
-                                    required
-                                />
+                                            placeholder="Name"
+                                            name="name" />
+                                        <TextField type="email"
 
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    className="form-control form-control-lg"
-                                    placeholder="Email Address"
-                                    name="email"
-                                    onChange={(e) => {
-                                        const email = e.target.value;
-                                        setuserData({ ...userData, ...{ email } })
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className="form-control form-control-lg"
-                                    placeholder="Password"
-                                    name="password"
-                                    onChange={(e) => {
-                                        const password = e.target.value;
-                                        setuserData({ ...userData, ...{ password } })
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className="form-control form-control-lg"
-                                    placeholder="Confirm Password"
-                                    name="password2"
-                                    onChange={(e) => {
-                                        const confirmPassword = e.target.value;
-                                        setuserData({ ...userData, ...{ confirmPassword } })
-                                    }}
-                                />
-                            </div>
-                            <input type="submit"
-                                className="btn btn-info btn-block mt-4" />
-                        </form>
+                                            placeholder="Email Address"
+                                            name="email" />
+                                        <TextField type="password"
+
+                                            placeholder=" Password"
+                                            name="password" />
+                                        <TextField type="password"
+
+                                            placeholder="Confirm Password"
+                                            name="confirmPassword" />
+
+                                        <button className="btn btn-info btn-block mt-4">Submit</button>
+                                    </Form>
+                                </>
+                            )}
+                        </Formik>
+
                     </div>
                 </div>
             </div>
