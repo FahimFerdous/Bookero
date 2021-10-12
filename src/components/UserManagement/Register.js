@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { useHistory } from "react-router-dom";
-import { Form, Formik } from 'formik'
+import { Form, Formik, Field } from 'formik'
 import TextField from "./TextField";
 
 import { Alert, Button } from "react-bootstrap"
@@ -24,12 +24,13 @@ const Register = () => {
 
 
 
-    const createNewUser = async (username, fullName, password, confirmPassword) => {
+    const createNewUser = async (username, fullName, password, confirmPassword, accountType) => {
         const data = {
             username: username,
             fullName: fullName,
             password: password,
-            confirmPassword: confirmPassword
+            confirmPassword: confirmPassword,
+            accountType: accountType.toUpperCase(),
 
         }
         await axios.post('http://localhost:8080/api/users/register', data)
@@ -77,12 +78,13 @@ const Register = () => {
                                 name: "",
                                 email: "",
                                 password: "",
-                                confirmPassword: ""
+                                confirmPassword: "",
+                                accountType: "",
                             }}
                             validationSchema={validate}
                             onSubmit={(values, action) => {
                                 console.log(values)
-                                createNewUser(values.email, values.name, values.password, values.confirmPassword)
+                                createNewUser(values.email, values.name, values.password, values.confirmPassword, values.accountType)
                                 action.resetForm()
                             }}
                         >
@@ -105,6 +107,22 @@ const Register = () => {
 
                                             placeholder="Confirm Password"
                                             name="confirmPassword" />
+
+                                        <div className="AccTypeMainContainer">
+                                            <h4>Select Account Type</h4>
+                                            <div className="AccTypeContainer">
+
+                                                <label className="col-xl-6 col-lg-6">
+                                                    <Field type="radio" name="accountType" value="Customer" />
+                                                    Customer
+                                                </label>
+                                                <label className="col-xl-6 col-lg-6">
+                                                    <Field type="radio" name="accountType" value="Business" />
+                                                    Business Account
+                                                </label>
+                                            </div>
+                                        </div>
+
 
                                         <button className="btn btn-info btn-block mt-4">Submit</button>
                                     </Form>

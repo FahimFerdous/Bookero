@@ -12,6 +12,7 @@ import Landing from "./components/Layout/Landing"
 import Register from "./components/UserManagement/Register";
 import Login from "./components/UserManagement/Login";
 import BookPage from './components/Layout/BookPage';
+import AddBooks from './components/Layout/AddBooks';
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
         <Route exact path="/login" component={Login} />
 
         <Route exact path="/bookPage" component={BookPage} />
+
+        <Route exact path="/addBooks" component={AddBooks} />
 
 
         {
