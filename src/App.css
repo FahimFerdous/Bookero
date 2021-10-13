@@ -89,3 +89,37 @@ img {
   margin: 5px;
 
 }
+
+.addbooksHeading{
+  text-align: center;
+    text-transform: uppercase;
+    color: #525252;
+}
+
+.mainHr{
+  margin-top: 6px;
+  /* padding-left: 9px; */
+  margin-left: 17px;
+  margin-right: 15px;
+  border: 1px dashed #007bff82;
+}
+
+.modalHeaderText{
+  color: #364e07;
+    font-weight: 700;
+
+}
+.modalBodyText{
+  font-size: 18px;
+}
+
+.modal-footer button{
+  background-color: #007bfff0;
+    border-color: #007bff82;
+}
+
+.modal-footer button:hover{
+  color:#007bfff0;
+  background-color: white;
+    border-color: #007bff82;
+}

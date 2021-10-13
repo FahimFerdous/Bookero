@@ -1,8 +1,9 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '../UserManagement/TextField'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { Modal, Button } from "react-bootstrap"
 
 const validate = Yup.object({
     title: Yup.string().required("Title must be entered"),
@@ -16,7 +17,7 @@ const validate = Yup.object({
 })
 
 const AddBooks = () => {
-
+    const [show, setshow] = useState(false)
 
     const addNewBook = async (title, author, publisher, pubDate, genre, isbn, description) => {
         const data = {
@@ -31,7 +32,7 @@ const AddBooks = () => {
         }
         await axios.post('http://localhost:8080/api/book/create', data)
             .then((res) => {
-                console.log("Success")
+                setshow(true)
 
             })
             .catch((error) => {
@@ -40,8 +41,18 @@ const AddBooks = () => {
             })
     }
 
+    const handleClose = () => {
+        setshow(false)
+    }
+
     return (
         <div className="container">
+            <div className="row">
+                <div className="addbooksHeading col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h3>Enter Information to add books</h3>
+                    <hr className="mainHr" />
+                </div>
+            </div>
             <div className="row">
                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <Formik
@@ -57,6 +68,7 @@ const AddBooks = () => {
                         validationSchema={validate}
                         onSubmit={(values, action) => {
                             console.log(values)
+
                             addNewBook(values.title, values.author, values.publisher, values.pubDate, values.genre, values.isbn, values.desc)
                             // createNewUser(values.email, values.name, values.password, values.confirmPassword, values.accountType)
                             action.resetForm()
@@ -105,6 +117,19 @@ const AddBooks = () => {
                     </Formik>
                 </div>
             </div>
+
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header>
+                    <Modal.Title className="modalHeaderText">BOOKEROO</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modalBodyText">Book added Successfully!</Modal.Body>
+                <Modal.Footer >
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
