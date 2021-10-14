@@ -1,4 +1,5 @@
 import React from 'react'
+import BookDetailsCard from './BookDetailsCard'
 
 import "./layout.css"
 
@@ -29,8 +30,18 @@ const BookPage = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-                    <h3>Content</h3>
+                <div className="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12" >
+                    <div className="row">
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$150" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$250" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$350" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$450" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$150" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$250" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$350" />
+                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$450" />
+                    </div>
+
                 </div>
             </div>
 
