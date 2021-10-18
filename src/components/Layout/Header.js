@@ -1,15 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logout } from '../../redux/UserSlice'
+
 
 const Header = (props) => {
 
     const info = useSelector((state) => state.user)
+    console.log(info)
+    const dispatch = useDispatch()
 
+    const logoutUser = () => {
+        dispatch(logout())
 
-
-
-
+    }
 
     return (
         <div>
@@ -25,9 +29,9 @@ const Header = (props) => {
                     <div className="collapse navbar-collapse" id="mobile-nav">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/dashboard">
-                                    Dashboard
-                                </Link>
+                                {info.userCred.accountType == "ADMIN" ? <Link className="nav-link" to="/addBooks">
+                                    Add Books
+                                </Link> : ""}
                             </li>
                             <li className="nav-item">
                                 {
@@ -42,6 +46,12 @@ const Header = (props) => {
                             </li>
 
                         </ul>
+                        {
+                            info.isLoggedIn ? <form>
+                                <input className="searchBox" type="text" placeholder="Search Here" />
+                            </form> : ""
+                        }
+
 
                         {
                             !info.isLoggedIn ? <>
@@ -60,13 +70,16 @@ const Header = (props) => {
                             </> : <>
 
                                 <ul className="navbar-nav ml-auto">
+                                    <li className="nav-item shopCart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </li>
                                     <li className="nav-item">
                                         <a className="nav-link " href="#">
                                             {info.userCred.email}
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">
+                                        <a className="nav-link" href="#" onClick={logoutUser} >
                                             Logout
                                         </a>
                                     </li>

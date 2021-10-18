@@ -8,9 +8,9 @@ export const loginUser = async (userCred, dispatch, history) => {
             password: userCred.pass
         }
         const res = await axios.post("http://localhost:8080/api/users/login", info);
+        const data = res.data
 
-
-        dispatch(login(userCred));
+        dispatch(login(data));
 
         history.push("/bookPage")
     } catch (err) {

@@ -13,6 +13,8 @@ import * as Yup from 'yup'
 const validate = Yup.object({
     name: Yup.string().required("Name must be entered"),
     email: Yup.string().email("email is invalid").required("Email must be entered"),
+    accountType: Yup.string().required("Account type must be entered"),
+
     password: Yup.string().min(6, "Minimum 6 character").required("Password must be entered"),
     confirmPassword: Yup.string().oneOf([Yup.ref("password"), null], "Password Must Match").required("Password must be entered"),
 })

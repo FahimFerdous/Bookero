@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import TextField from '../UserManagement/TextField'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import { Modal, Button } from "react-bootstrap"
+import { useSelector } from 'react-redux'
+
 
 const validate = Yup.object({
     title: Yup.string().required("Title must be entered"),
@@ -18,6 +21,16 @@ const validate = Yup.object({
 
 const AddBooks = () => {
     const [show, setshow] = useState(false)
+
+    const user = useSelector((state) => state.user)
+
+    const history = useHistory()
+
+    if (!user.isLoggedIn) {
+        history.push("/login")
+    }
+
+
 
     const addNewBook = async (title, author, publisher, pubDate, genre, isbn, description) => {
         const data = {

@@ -7,17 +7,21 @@ export const userSlice = createSlice({
         isLoggedIn: false,
         userCred: {
             email: "",
-            password: ""
+            accountType: ""
         }
     },
     reducers: {
         login: (state, action) => {
-            state.userCred = action.payload;
+            state.userCred.email = action.payload.username;
+            state.userCred.accountType = action.payload.accountType;
             state.isLoggedIn = true;
         },
         logout: (state) => {
             state.isLoggedIn = false;
-            state.userCred = null;
+            state.userCred.email = "";
+            state.userCred.accountType = ""
+
+
         }
     }
 })
