@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BookDetailsCard from './BookDetailsCard'
+import JSONDATA from "../UserManagement/DemoData.json"
 
 import "./layout.css"
 
 const BookPage = () => {
+
+    const [filter, setfilter] = useState("")
+
+    const setsearchText = (e) => {
+        setfilter(e.target.value)
+    }
+
+    let searchData = JSONDATA.filter(item => {
+        return Object.keys(item).some(key => item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
+    })
+
     return (
         <div className="container">
             <div className='row'>
@@ -32,14 +44,17 @@ const BookPage = () => {
                 </div>
                 <div className="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12" >
                     <div className="row">
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$150" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$250" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$350" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$450" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$150" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$250" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$350" />
-                        <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title="Harry Porter and the Chamber of Secrets" author="J.K. Rowling" price="$450" />
+                        <input className="searchBox" type="text" placeholder="Search Here" value={filter} onChange={setsearchText.bind(this)} />
+                        <hr className="searchDivider" />
+                    </div>
+                    <div className="row">
+                        {
+                            searchData.map((val, key) => {
+                                return <BookDetailsCard src="https://vectorsjungle.com/cache/icon_700/icons/20-vectorsjungle/XuIYcq/preview.png" title={val.Title} author={val.Author} price={val.Price} />
+                            })
+                        }
+
+
                     </div>
 
                 </div>

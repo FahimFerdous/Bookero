@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../../redux/UserSlice'
@@ -6,12 +6,19 @@ import { logout } from '../../redux/UserSlice'
 
 const Header = (props) => {
 
+    const [searchText, setsearchText] = useState("");
+
     const info = useSelector((state) => state.user)
+
     console.log(info)
     const dispatch = useDispatch()
 
     const logoutUser = () => {
         dispatch(logout())
+
+    }
+
+    const Searching = (searchText) => {
 
     }
 
@@ -46,11 +53,12 @@ const Header = (props) => {
                             </li>
 
                         </ul>
-                        {
+
+                        {/* {
                             info.isLoggedIn ? <form>
-                                <input className="searchBox" type="text" placeholder="Search Here" />
+                                <input className="searchBox" type="text" placeholder="Search Here" value={searchText} onChange={(e) => { setsearchText(e.target.vale); console.log(searchText) }} />
                             </form> : ""
-                        }
+                        } */}
 
 
                         {
@@ -91,6 +99,7 @@ const Header = (props) => {
                 </div>
             </nav>
         </div>
+
 
     )
 }

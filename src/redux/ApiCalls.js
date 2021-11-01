@@ -12,6 +12,7 @@ export const loginUser = async (userCred, dispatch, history) => {
 
         dispatch(login(data));
 
+
         history.push("/bookPage")
     } catch (err) {
         console.log(err)

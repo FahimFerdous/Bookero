@@ -1,0 +1,37 @@
+[
+    {
+        "Title": "A Brief History of Time",
+        "Author": "Stephen Hawkings",
+        "Price": "$100"
+    },
+    {
+        "Title": "Mackbeth",
+        "Author": "Willium Shakepeare",
+        "Price": "$120"
+    },
+    {
+        "Title": "Harry Porter",
+        "Author": "J.K.Rowling",
+        "Price": "$150"
+    },
+    {
+        "Title": "Parallel Universe",
+        "Author": "Brian Greene",
+        "Price": "$90"
+    },
+    {
+        "Title": "Outliers",
+        "Author": "Malcolm Gladwell",
+        "Price": "$170"
+    },
+    {
+        "Title": "The Alchemist",
+        "Author": "Paolo Coelho",
+        "Price": "$200"
+    },
+    {
+        "Title": "Secrects of Zionism",
+        "Author": "Henry Ford",
+        "Price": "$100"
+    }
+]
